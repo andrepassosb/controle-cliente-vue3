@@ -5,12 +5,12 @@
         <div class="box-link_home"></div>
       </div>
     </router-link>
-    <router-link to="/todo">
+    <router-link to="/agenda">
       <div class="box-link">
         <div class="box-link_todo"></div>
       </div>
     </router-link>
-    <router-link to="/profile">
+    <router-link to="/clientes">
       <div class="box-link">
         <div class="box-link_profile"></div>
       </div>
@@ -31,7 +31,13 @@
           <option value="">Inativo</option>
         </select> -->
         <li
-          class="dropdown-item pe-3 d-flex align-items-center justify-content-between"
+          class="
+            dropdown-item
+            pe-3
+            d-flex
+            align-items-center
+            justify-content-between
+          "
         >
           <label for="status">Status:</label>
           <!-- <input type="checkbox" checked v-model="state.checkbox" /> -->
@@ -93,6 +99,7 @@ nav {
   border: 1px solid rgb(239, 243, 244);
   z-index: 5;
   transform: translateX(-1px);
+  box-shadow: 0px 0px 14px 0px rgb(0 0 0 / 15%);
 }
 .nav-bar_app {
   background-color: #fff;
@@ -148,7 +155,7 @@ nav .router-link-exact-active .box-link_home {
 
 nav .router-link-exact-active .box-link_todo {
   padding: 15px;
-  background: black;
+  background: #5c486a;
   -webkit-mask: url(@/assets/icons/todo-focus.svg) no-repeat center;
   mask: url(@/assets/icons/todo-focus.svg) no-repeat center;
 }
@@ -162,7 +169,7 @@ nav .router-link-exact-active .box-link_todo {
 
 nav .router-link-exact-active .box-link_profile {
   padding: 15px;
-  background: black;
+  background: #5c486a;
   -webkit-mask: url(@/assets/icons/profile-focus.svg) no-repeat center;
   mask: url(@/assets/icons/profile-focus.svg) no-repeat center;
 }

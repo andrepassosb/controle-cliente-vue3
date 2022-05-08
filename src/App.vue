@@ -24,31 +24,30 @@ export default {
   margin: auto;
   border: 1px solid rgb(239, 243, 244);
   min-height: 100vh;
-  background-color: #fff3f2;
 }
 
-.border-botton-gray{
-    border-bottom: 1px solid rgb(239, 243, 244);
+.border-botton-gray {
+  border-bottom: 1px solid rgb(239, 243, 244);
 }
-.flex-basis-0{
+.flex-basis-0 {
   flex-basis: 0px;
 }
-.btn.btn-primary{
+.btn.btn-primary {
   background-color: rgb(29, 155, 240);
   border-color: rgba(255, 255, 255, 0.5);
 }
-.btn.btn-primary:hover{
+.btn.btn-primary:hover {
   background-color: rgb(68, 169, 236);
   border-color: rgba(255, 255, 255, 0.5);
 }
-.btn.btn-secondary{
+.btn.btn-secondary {
   background-color: rgb(239, 243, 244);
-  color:black;
+  color: black;
   border-color: rgba(255, 255, 255, 0.5);
 }
-.btn.btn-secondary:hover{
+.btn.btn-secondary:hover {
   border-color: rgba(255, 255, 255, 0.3);
   background-color: rgb(215, 219, 220);
-  color:#000
+  color: #000;
 }
 </style>
