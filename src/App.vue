@@ -25,7 +25,9 @@ export default {
   border: 1px solid rgb(239, 243, 244);
   min-height: 100vh;
 }
-
+h1 {
+  color: #5c486a;
+}
 .border-botton-gray {
   border-bottom: 1px solid rgb(239, 243, 244);
 }
