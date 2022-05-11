@@ -17,12 +17,7 @@ const date = ref(
 );
 </script>
 
-<style scoped>
-h1 {
-  font-weight: 600;
-  text-align: initial;
-  padding-left: 50px;
-}
+<style>
 .vc-container.vc-blue {
   width: 90%;
   margin-top: 20px;
@@ -35,6 +30,13 @@ h1 {
 }
 .vc-arrow {
   transform: translateY(-4px);
+}
+</style>
+<style scoped>
+h1 {
+  font-weight: 600;
+  text-align: initial;
+  padding-left: 50px;
 }
 .wrapper-agenda {
   background-color: #fcd0cf;
