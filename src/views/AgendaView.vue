@@ -17,7 +17,7 @@ const date = ref(
 );
 </script>
 
-<style>
+<style scoped>
 h1 {
   font-weight: 600;
   text-align: initial;
