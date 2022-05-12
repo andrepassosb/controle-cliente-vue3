@@ -126,5 +126,6 @@ h1 {
   border-radius: 25px 25px 0 0;
   margin-top: -20px;
   background-color: white;
+  margin-bottom: 100px;
 }
 </style>
