@@ -1,11 +1,10 @@
 <template>
   <section class="wrapper-cliente">
-    <h1>Clientes</h1>
+    <h1 class="pt-3">Clientes</h1>
   </section>
   <section class="wrapper">
-    adsadasa <br />
-    asdsdsa <br />
-    asdasdas
+    <span>Nome</span>
+    <img src="@/assets/icons/whatsapp.svg" alt="" />
   </section>
 </template>
 
@@ -18,5 +17,10 @@
   border-radius: 25px 25px 0 0;
   margin-top: -20px;
   background-color: white;
+}
+h1 {
+  font-weight: 600;
+  text-align: initial;
+  padding-left: 50px;
 }
 </style>
