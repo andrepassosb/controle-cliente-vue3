@@ -2,13 +2,13 @@
   <section class="wrapper-logo">
     <h1>
       <span class="studio">studio</span
-      ><span class="BrushRegular studio-name">Gisele Duarte</span>
+      ><span class="BrushRegular studio-name">Gisele</span>
     </h1>
     <h3 class="BrushRegular slogan">Seu estilo, seu jeito</h3>
   </section>
   <section class="wrapper">
     <div class="image">
-      <img class="w-100" src="@/assets/pic_1.jpg" alt="" />
+      <img class="w-100" src="@/assets/pic_2.jpeg" alt="" />
     </div>
   </section>
 </template>
