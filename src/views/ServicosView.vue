@@ -1,6 +1,6 @@
 <template>
   <section class="wrapper-cliente">
-    <h1 class="pt-3">Clientes</h1>
+    <h1 class="pt-3">Serviços</h1>
   </section>
   <section class="wrapper mt-3">
     <div v-for="user in store.users" :key="user.id" class="clientes">

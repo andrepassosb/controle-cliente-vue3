@@ -7,4 +7,10 @@ export default () => ({
 
     return response;
   },
+  updateUser: (userID, user) => {
+    const url = `/pessoas/${userID}/?format=json`;
+    const response = requestApi(url, "post", user);
+
+    return response;
+  },
 });

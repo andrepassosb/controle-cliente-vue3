@@ -15,7 +15,12 @@
         <div class="box-link_profile"></div>
       </div>
     </router-link>
-    <div class="dropdown">
+    <router-link to="/servicos">
+      <div class="box-link">
+        <div class="box-link_more"></div>
+      </div>
+    </router-link>
+    <!-- <div class="dropdown">
       <div
         class="box-link nav"
         type="button"
@@ -26,10 +31,10 @@
         <div class="box-link_more"></div>
       </div>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <!-- <select class="dropdown-item" name="status" id="status">
+        <select class="dropdown-item" name="status" id="status">
           <option value="">Ativo</option>
           <option value="">Inativo</option>
-        </select> -->
+        </select>
         <li
           class="
             dropdown-item
@@ -40,11 +45,11 @@
           "
         >
           <label for="status">Status:</label>
-          <!-- <input type="checkbox" checked v-model="state.checkbox" /> -->
+          <input type="checkbox" checked v-model="state.checkbox" />
         </li>
         <li><div class="dropdown-item" @click="logout()">Sair</div></li>
       </ul>
-    </div>
+    </div> -->
   </nav>
 </template>
 <script>

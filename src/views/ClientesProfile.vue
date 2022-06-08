@@ -4,22 +4,63 @@
   </section>
   <section class="wrapper mt-3">
     <div class="clientes">
-      <p>id : {{ store.users[userId].id }}</p>
-      <p>username : {{ store.users[userId].username }}</p>
-      <p>cpf: {{ store.users[userId].cpf }}</p>
-      <p>first_name: {{ store.users[userId].first_name }}</p>
-      <p>last_name: {{ store.users[userId].last_name }}</p>
-      <p>endereco: {{ store.users[userId].endereco }}</p>
-      <p>nascimento: {{ store.users[userId].nascimento }}</p>
-      <p>telefone: {{ store.users[userId].telefone }}</p>
-      <p>email: {{ store.users[userId].email }}</p>
-      <p>is_atendente: {{ store.users[userId].is_atendente }}</p>
-      <p>is_gerente: {{ store.users[userId].is_gerente }}</p>
+      <div class="clientes-input col-12">
+        <p class="col-4">Usuário :</p>
+        <input class="col-8" type="text" v-model="user.username" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Cpf :</p>
+        <input class="col-8" type="text" v-model="user.cpf" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Primeiro nome :</p>
+        <input class="col-8" type="text" v-model="user.first_name" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Último nome :</p>
+        <input class="col-8" type="text" v-model="user.last_name" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Endereco :</p>
+        <input class="col-8" type="text" v-model="user.endereco" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Data de nascimento :</p>
+        <input class="col-8" type="text" v-model="user.nascimento" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Telefone :</p>
+        <input class="col-8" type="text" v-model="user.telefone" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Endereço de email :</p>
+        <input class="col-8" type="text" v-model="user.email" />
+      </div>
+      <div class="clientes-input col-12">
+        <p class="col-4">Nova senha :</p>
+        <input class="col-8" type="text" v-model="user.new_password" />
+      </div>
+    </div>
+    <div class="mx-5 d-flex justify-content-between">
+      <button @click="backPage()" type="button" class="btn btn-primary">
+        Voltar
+      </button>
+      <button
+        v-if="userId !== 'cadastrar'"
+        @click="save()"
+        type="button"
+        class="btn btn-secondary"
+      >
+        Salvar
+      </button>
+      <button v-else @click="cadastrar()" type="button" class="btn btn-primary">
+        Cadastrar
+      </button>
     </div>
   </section>
 </template>
 <script setup>
-import { onMounted } from "@vue/runtime-core";
+import { onMounted, ref } from "@vue/runtime-core";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
 import { setUser } from "@/store/data";
@@ -31,14 +72,29 @@ const userId = route.params.userId;
 
 const store = useStore();
 
+const user = ref({});
+
 onMounted(async () => {
-  if (!store.users || Object.keys(store.users).length === 0) {
-    const { data } = await services.users.getAllUsers();
-    data.forEach((user) => {
-      setUser(user.id, user);
-    });
+  if (userId !== "cadastrar") {
+    if (!store.users || Object.keys(store.users).length === 0) {
+      const { data } = await services.users.getAllUsers();
+      data.forEach((user) => {
+        setUser(user.id, user);
+      });
+    }
+    user.value = store.users[userId];
   }
 });
+function backPage() {
+  history.back();
+}
+function save() {
+  services.users.updateUser(userId, user);
+  setUser(userId, user);
+}
+function cadastrar() {
+  console.log("cadastrar");
+}
 </script>
 
 <style scoped>
@@ -69,5 +125,16 @@ h1 {
   align-items: flex-start;
   flex-direction: column;
   align-content: flex-start;
+}
+.clientes-input {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin-top: 10px;
+}
+.clientes-input p {
+  margin-bottom: 0;
+  margin-right: 10px;
+  text-align: end;
 }
 </style>
