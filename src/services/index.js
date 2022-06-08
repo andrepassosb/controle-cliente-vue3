@@ -1,5 +1,6 @@
 import axios from "axios";
 import UsersService from "./users";
+import ServicoService from "./servicos";
 
 const baseURL = "https://controleatendimentos.herokuapp.com/api";
 
@@ -40,4 +41,5 @@ function responseData(response) {
 
 export default {
   users: UsersService(),
+  servicos: ServicoService(),
 };

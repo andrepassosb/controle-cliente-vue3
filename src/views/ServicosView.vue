@@ -3,24 +3,13 @@
     <h1 class="pt-3">Serviços</h1>
   </section>
   <section class="wrapper mt-3">
-    <div v-for="user in store.users" :key="user.id" class="clientes">
-      <router-link :to="`/clientes/${user.id}`">
-        <span>{{
-          user.first_name
-            ? `${user.first_name} ${user.last_name}`
-            : `Cliente n°:${user.id}`
-        }}</span>
+    <div v-for="servico in store.servicos" :key="servico.id" class="clientes">
+      <router-link :to="`/servicos/${servico.id}`">
+        <span>{{ servico.nome }}</span>
       </router-link>
-      <a
-        v-if="user.telefone"
-        :href="`https://api.whatsapp.com/send?phone=55${user.telefone}`"
-        target="_blank"
-      >
-        <img src="@/assets/icons/whatsapp.svg" alt="" />
-      </a>
     </div>
   </section>
-  <router-link :to="`/clientes/cadastrar`">
+  <router-link :to="`/servicos/cadastrar`">
     <button type="button" class="btn btn-primary">
       <span>Cadastrar</span>
     </button>
@@ -30,15 +19,15 @@
 import { onMounted } from "@vue/runtime-core";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
-import { setUser } from "@/store/data";
+import { setServico } from "@/store/servicos";
 
 const store = useStore();
 
 onMounted(async () => {
-  if (!store.users || Object.keys(store.users).length === 0) {
-    const { data } = await services.users.getAllUsers();
-    data.forEach((user) => {
-      setUser(user.id, user);
+  if (!store.servicos || Object.keys(store.servicos).length === 0) {
+    const { data } = await services.servicos.getAllServicos();
+    data.forEach((servico) => {
+      setServico(servico.id, servico);
     });
   }
 });

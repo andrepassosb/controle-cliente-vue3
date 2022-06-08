@@ -29,6 +29,11 @@ const router = createRouter({
       name: "servicos",
       component: () => import("../views/ServicosView.vue"),
     },
+    {
+      path: "/servicos/:servicoId",
+      name: "Servicos Item",
+      component: () => import("../views/ServicosItem.vue"),
+    },
   ],
 });
 
