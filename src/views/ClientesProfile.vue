@@ -63,7 +63,7 @@
 import { onMounted, ref } from "@vue/runtime-core";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
-import { setUser } from "@/store/data";
+import { setUser } from "@/store/users";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -92,8 +92,10 @@ function save() {
   services.users.updateUser(userId, user);
   setUser(userId, user);
 }
-function cadastrar() {
-  console.log("cadastrar");
+async function cadastrar() {
+  const newUser = await services.users.postNewUser(user.value);
+  console.log(newUser);
+  setUser(newUser.id, newUser.data);
 }
 </script>
 

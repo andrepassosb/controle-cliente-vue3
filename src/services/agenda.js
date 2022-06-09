@@ -1,14 +1,14 @@
 import { requestApi } from ".";
 
 export default () => ({
-  getAllServicos: () => {
-    const url = "/servicos/?format=json";
+  getAgenda: () => {
+    const url = "/agendamentos/?format=json";
     const response = requestApi(url, "get");
 
     return response;
   },
-  postNewServico: (data) => {
-    const url = "/servicos/";
+  postAgendamento: (data) => {
+    const url = "/agendamentos/";
     const response = requestApi(url, "post", data);
 
     return response;

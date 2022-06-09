@@ -14,11 +14,25 @@
       </div>
       <div class="clientes-input col-12">
         <p class="col-4">Duração prevista :</p>
-        <input class="col-8" type="text" v-model="servico.duracao_prevista" />
+        <input class="col-8" type="number" v-model="servico.duracao_prevista" />
       </div>
       <div class="clientes-input col-12">
-        <p class="col-4">ativo :</p>
-        <input class="col-8" type="text" v-model="servico.ativo" />
+        <input
+          type="radio"
+          id="ativo"
+          name="fav_language"
+          :value="true"
+          v-model="servico.ativo"
+        />
+        <label for="ativo">Ativo</label><br />
+        <input
+          type="radio"
+          id="inativo"
+          name="fav_language"
+          :value="false"
+          v-model="servico.ativo"
+        />
+        <label for="inativo">Inativo</label><br />
       </div>
     </div>
     <div class="mx-5 d-flex justify-content-between">
@@ -43,7 +57,7 @@
 import { onMounted, ref } from "@vue/runtime-core";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
-import { setUser } from "@/store/data";
+import { setServico } from "@/store/servicos";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -57,10 +71,10 @@ const servico = ref({});
 onMounted(async () => {
   if (servicoId !== "cadastrar") {
     if (!store.servicos || Object.keys(store.servicos).length === 0) {
-      const { data } = await services.servicos.getAllServicos();
-      data.forEach((servico) => {
-        setUser(servico.id, servico);
-      });
+      // const { data } = await services.servicos.getAllServicos();
+      // // data.forEach((servico) => {
+      // //   // setUser(servico.id, servico);
+      // // });
     }
     servico.value = store.servicos[servicoId];
   }
@@ -70,10 +84,12 @@ function backPage() {
 }
 function save() {
   services.servicos.updateUser(servicoId, servico);
-  setUser(servicoId, servico);
+  // setUser(servicoId, servico);
 }
-function cadastrar() {
-  console.log("cadastrar");
+async function cadastrar() {
+  servico.value.duracao_prevista = +servico.value.duracao_prevista;
+  const newServico = await services.servicos.postNewServico(servico.value);
+  setServico(newServico.id, newServico.data);
 }
 </script>
 

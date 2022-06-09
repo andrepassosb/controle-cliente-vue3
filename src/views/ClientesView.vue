@@ -2,6 +2,7 @@
   <section class="wrapper-cliente">
     <h1 class="pt-3">Clientes</h1>
   </section>
+  {{ store.loading.status }}
   <section class="wrapper mt-3">
     <div v-for="user in store.users" :key="user.id" class="clientes">
       <router-link :to="`/clientes/${user.id}`">
@@ -30,7 +31,7 @@
 import { onMounted } from "@vue/runtime-core";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
-import { setUser } from "@/store/data";
+import { setUser } from "@/store/users";
 
 const store = useStore();
 

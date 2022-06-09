@@ -4,7 +4,8 @@ const state = reactive({
   servicos: {},
 });
 
-export default state;
+export default state.servicos;
+
 export function setServico(servicosId, servicosInfo) {
   state.servicos[servicosId] = servicosInfo;
 }

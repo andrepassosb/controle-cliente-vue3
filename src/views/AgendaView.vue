@@ -27,8 +27,10 @@
 </template>
 
 <script setup>
-import { computed } from "@vue/reactivity";
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
+import services from "@/services";
+import useStore from "@/hooks/useStore";
+import { setAgenda } from "@/store/agenda";
 
 const date = ref(
   "Wed May 18 2022 00:04:26 GMT-0300 (Horário Padrão de Brasília)"
@@ -46,6 +48,16 @@ const month = computed(() => {
 });
 const fullYear = computed(() => {
   return new Date(date.value).getFullYear();
+});
+
+const store = useStore();
+
+onMounted(async () => {
+  if (!store.agenda || Object.keys(store.agenda).length === 0) {
+    const { data } = await services.agenda.getAgenda();
+    setAgenda(data);
+    console.log(data);
+  }
 });
 
 var everyNminutes = (duration, open, close) => {
@@ -110,6 +122,7 @@ console.log(everyNminutes(15));
   font-size: 14px;
   font-weight: 600;
   padding: 4px 0;
+  cursor: pointer;
 }
 </style>
 <style scoped>

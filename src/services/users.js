@@ -13,4 +13,10 @@ export default () => ({
 
     return response;
   },
+  postNewUser: (data) => {
+    const url = "/pessoas/";
+    const response = requestApi(url, "post", data);
+
+    return response;
+  },
 });

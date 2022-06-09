@@ -1,8 +1,12 @@
 import { readonly } from "vue";
-import data from "./data";
-import state from "./servicos";
+import users from "./users";
+import servicos from "./servicos";
+import loading from "./loading";
+import agenda from "./agenda";
 
 export default readonly({
-  users: data.users,
-  servicos: state.servicos,
+  users,
+  servicos,
+  loading,
+  agenda,
 });
