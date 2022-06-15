@@ -1,11 +1,14 @@
 import { reactive } from "vue";
 
 const state = reactive({
-  agenda: {},
+  agenda: {
+    data: [],
+  },
 });
 
 export default state.agenda;
 
 export function setAgenda(agenda) {
-  state.agenda = agenda;
+  state.agenda.data = agenda;
+  console.log("agenda", state.agenda);
 }

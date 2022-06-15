@@ -8,8 +8,8 @@ export default () => ({
     return response;
   },
   updateUser: (userID, user) => {
-    const url = `/pessoas/${userID}/?format=json`;
-    const response = requestApi(url, "post", user);
+    const url = `/pessoas/${userID}/`;
+    const response = requestApi(url, "put", user.value);
 
     return response;
   },

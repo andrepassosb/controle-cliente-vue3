@@ -3,7 +3,7 @@
     <h1 class="pt-3">Sua agenda</h1>
   </section>
   <section class="wrapper">
-    <v-date-picker v-model="date" />
+    <v-date-picker v-model="date" @click="selectHour = ''" />
     <h4 class="mt-3 selecione">Selecione na agenda</h4>
     <div class="horarios">
       <template
@@ -13,51 +13,104 @@
         <div
           class="horarios-atendimento"
           :class="selectHour == hours ? 'selecionado' : ''"
-          @click="selectHour = hours"
+          @click="
+            selectHour == '' || selectHour != hours
+              ? (selectHour = hours)
+              : (selectHour = '')
+          "
         >
           {{ hours }}
         </div>
       </template>
     </div>
     <br />
-    {{ day }} / {{ month }} / {{ fullYear }}
-    <br />
-    {{ selectHour }}
+    <!-- {{ day }} / {{ month }} / {{ fullYear }} -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Cliente</th>
+          <th scope="col">Serviço</th>
+          <th scope="col">Atendente</th>
+          <th scope="col">Horário</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="agendaCliente in clientsOfDay" :key="agendaCliente.id">
+          <th scope="row">{{ store.users[agendaCliente.pessoa].username }}</th>
+          <th scope="row">{{ store.servicos[agendaCliente.servico].nome }}</th>
+          <th scope="row">{{ store.users[agendaCliente.pessoa].username }}</th>
+          <td>{{ agendaCliente.horario.slice(0, -3) }}</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
 import { setAgenda } from "@/store/agenda";
+import { setUser } from "@/store/users";
+import { setServico } from "@/store/servicos";
 
-const date = ref(
-  "Wed May 18 2022 00:04:26 GMT-0300 (Horário Padrão de Brasília)"
-);
+const date = ref("");
 const selectHour = ref("");
 const open = 10;
 const close = 20;
 const duration = 30;
 
 const day = computed(() => {
-  return new Date(date.value).getDate();
+  let Day = new Date(date.value).getDate();
+  if (Day < 10) Day = `0${Day}`;
+  return Day;
 });
 const month = computed(() => {
-  return new Date(date.value).getMonth();
+  let Month = new Date(date.value).getMonth() + 1;
+  if (Month < 10) Month = `0${Month}`;
+  return Month;
 });
 const fullYear = computed(() => {
   return new Date(date.value).getFullYear();
 });
 
+const clientsOfDay = ref([]);
+
 const store = useStore();
 
+watch(date, () => {
+  clientsOfDay.value = store.agenda.data.filter((e) => {
+    return e.dia == `${fullYear.value}-${month.value}-${day.value}`;
+  });
+});
+
+watch(selectHour, () => {
+  clientsOfDay.value = store.agenda.data.filter((e) => {
+    return (
+      e.dia == `${fullYear.value}-${month.value}-${day.value}` &&
+      e.horario.slice(0, -3) == selectHour.value
+    );
+  });
+});
+
 onMounted(async () => {
-  if (!store.agenda || Object.keys(store.agenda).length === 0) {
+  if (!store.agenda.data || store.agenda.data.length === 0) {
     const { data } = await services.agenda.getAgenda();
     setAgenda(data);
-    console.log(data);
   }
+  if (!store.users || Object.keys(store.users).length === 0) {
+    const { data } = await services.users.getAllUsers();
+    data.forEach((user) => {
+      setUser(user.id, user);
+    });
+  }
+  if (!store.servicos || Object.keys(store.servicos).length === 0) {
+    const { data } = await services.servicos.getAllServicos();
+    data.forEach((servico) => {
+      setServico(servico.id, servico);
+    });
+  }
+  date.value = new Date();
 });
 
 var everyNminutes = (duration, open, close) => {
@@ -81,8 +134,6 @@ var everyNminutes = (duration, open, close) => {
   }
   return result;
 };
-
-console.log(everyNminutes(15));
 </script>
 
 <style>
@@ -140,5 +191,9 @@ h1 {
   margin-top: -20px;
   background-color: white;
   margin-bottom: 100px;
+}
+table.table.table-striped {
+  width: 95%;
+  margin: auto;
 }
 </style>
