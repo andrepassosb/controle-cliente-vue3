@@ -42,7 +42,73 @@
           <td>{{ agendaCliente.horario.slice(0, -3) }}</td>
         </tr>
       </tbody>
+      <tbody>
+        <tr>
+          <th scope="row">
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="agendar.pessoa"
+            >
+              <option
+                v-for="user in store.users"
+                :value="user.id"
+                :key="user.id"
+              >
+                {{ user.username }}
+              </option>
+            </select>
+          </th>
+          <th scope="row">
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="agendar.servico"
+            >
+              <option
+                v-for="servico in store.servicos"
+                :value="servico.id"
+                :key="servico.id"
+              >
+                {{ servico.nome }}
+              </option>
+            </select>
+          </th>
+          <th scope="row">
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="agendar.atendente"
+            >
+              <option
+                v-for="user in store.users"
+                :value="user.id"
+                :key="user.id"
+              >
+                {{ user.username }}
+              </option>
+            </select>
+          </th>
+          <th scope="row">
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="agendar.horario"
+            >
+              <option
+                v-for="min in everyNminutes(duration, open, close)"
+                :key="min"
+              >
+                {{ min }}
+              </option>
+            </select>
+          </th>
+        </tr>
+      </tbody>
     </table>
+    <button type="button" @click="addAgenda" class="btn btn-primary">
+      Adicionar a agenda
+    </button>
   </section>
 </template>
 
@@ -77,6 +143,17 @@ const fullYear = computed(() => {
 const clientsOfDay = ref([]);
 
 const store = useStore();
+
+const agendar = ref({});
+
+const addAgenda = () => {
+  agendar.value.horario = `${agendar.value.horario}:00`;
+  agendar.value.dia = `${fullYear.value}-${month.value}-${day.value}`;
+  services.agenda.postAgendamento(agendar.value);
+  setAgenda([...store.agenda.data, agendar.value]);
+  clientsOfDay.value = [...clientsOfDay.value, agendar.value];
+  agendar.value = {};
+};
 
 watch(date, () => {
   clientsOfDay.value = store.agenda.data.filter((e) => {
@@ -195,5 +272,12 @@ h1 {
 table.table.table-striped {
   width: 95%;
   margin: auto;
+}
+select.form-select.form-select-lg.mb-3 {
+  font-size: 12px;
+}
+.form-select {
+  display: block;
+  width: auto;
 }
 </style>
