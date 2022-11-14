@@ -19,6 +19,8 @@
       >
         <img src="@/assets/icons/whatsapp.svg" alt="" />
       </a>
+      <Stars :user="user.id"/>
+
     </div>
   </section>
   <router-link :to="`/clientes/cadastrar`">
@@ -32,6 +34,8 @@ import { onMounted } from "@vue/runtime-core";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
 import { setUser } from "@/store/users";
+import Stars from "@/components/Molecules/Stars.vue";
+
 
 const store = useStore();
 

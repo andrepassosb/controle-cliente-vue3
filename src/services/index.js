@@ -1,13 +1,16 @@
 import axios from "axios";
 import UsersService from "./users";
 import { setLoading } from "../store/loading";
+import { setError } from "../store/error";
 import ServicoService from "./servicos";
 import AgendaService from "./agenda";
+import PontuacaoService from "./pontuacao";
 
 const baseURL = "https://controleatendimentos.herokuapp.com/api";
 
 export async function requestApi(url, type, data = "") {
   setLoading(true);
+  setError(false);
   // const token = "";
   const response = await new Promise((resolve) => {
     axios({
@@ -25,6 +28,7 @@ export async function requestApi(url, type, data = "") {
       })
       .catch((error) => {
         setLoading(false);
+        setError(error);
         resolve(error.response);
       });
   });
@@ -49,4 +53,5 @@ export default {
   users: UsersService(),
   servicos: ServicoService(),
   agenda: AgendaService(),
+  pontuacao: PontuacaoService(),
 };

@@ -3,6 +3,11 @@
     <h1 class="pt-3">Clientes</h1>
   </section>
   <section class="wrapper mt-3">
+    <div v-if="error">
+      <p v-for="errorMsg in errorLog" :key="errorMsg" class="error-msg">
+        {{ errorMsg }}
+      </p>
+    </div>
     <div class="clientes">
       <div class="clientes-input col-12">
         <p class="col-4">Usuário :</p>
@@ -26,15 +31,15 @@
       </div>
       <div class="clientes-input col-12">
         <p class="col-4">Data de nascimento :</p>
-        <input class="col-8" type="text" v-model="user.nascimento" />
+        <input class="col-8" type="date" v-model="user.nascimento" />
       </div>
       <div class="clientes-input col-12">
         <p class="col-4">Telefone :</p>
-        <input class="col-8" type="text" v-model="user.telefone" />
+        <input class="col-8" type="number" v-model="user.telefone" />
       </div>
       <div class="clientes-input col-12">
         <p class="col-4">Endereço de email :</p>
-        <input class="col-8" type="text" v-model="user.email" />
+        <input class="col-8" type="email" v-model="user.email" />
       </div>
       <div class="clientes-input col-12">
         <p class="col-4">Nova senha :</p>
@@ -60,7 +65,7 @@
   </section>
 </template>
 <script setup>
-import { onMounted, ref } from "@vue/runtime-core";
+import { onMounted, ref, computed } from "@vue/runtime-core";
 import services from "@/services";
 import useStore from "@/hooks/useStore";
 import { setUser } from "@/store/users";
@@ -73,6 +78,7 @@ const userId = route.params.userId;
 const store = useStore();
 
 const user = ref({});
+const errorLog = ref([]);
 
 onMounted(async () => {
   if (userId !== "cadastrar") {
@@ -93,10 +99,17 @@ function save() {
   setUser(userId, user);
 }
 async function cadastrar() {
-  const newUser = await services.users.postNewUser(user.value);
-  console.log(newUser);
-  setUser(newUser.id, newUser.data);
+  errorLog.value = [];
+  const response = await services.users.postNewUser(user.value);
+  if (error) {
+    errorLog.value = Object.keys(response.data).map(
+      (e) => `${e} : ${response.data[e]}`
+    );
+  }
+  setUser(response.id, response.data);
 }
+
+const error = computed(() => store.error.error);
 </script>
 
 <style scoped>
@@ -138,5 +151,9 @@ h1 {
   margin-bottom: 0;
   margin-right: 10px;
   text-align: end;
+}
+.error-msg {
+  margin-bottom: 1px;
+  color: red;
 }
 </style>
