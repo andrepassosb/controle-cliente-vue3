@@ -6,6 +6,11 @@ const state = reactive({
 
 export default state.pontuacao;
 
-export function setUser(userId, pontuacao) {
-  state.pontuacao[userId] = pontuacao;
+export function setPontuacao(userId, pontuacao) {
+  if (!state.pontuacao[userId]) state.pontuacao[userId] = [];
+  state.pontuacao[userId].push(pontuacao);
+}
+
+export function resetPontuacao() {
+  state.pontuacao = {};
 }
